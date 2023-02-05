@@ -1,0 +1,12 @@
+# Course Title: Introduction to Natural Language Processing
+
+# Course Description (76 words):
+Course topics include principles and techniques of text analysis in R. Natural Language Processing (NLP) extracts insights from large amounts of natural language.  Lessons will help students add NLP techniques to their research, business and data science toolset.
+
+Curriculum is focused on applying popular text mining methods versus in-depth theory. Various texts are provided but students are encouraged to work with their own.  Technical concepts include processing text, visualization, APIs, web-scraping, sentiment analysis and training ML.
+
+# Course Learning Objectives (78 words):
+
+1. You will be able to think systematically about how language can be processed and analyzed quantitatively.  This objective will be accomplished using ideas from statistics, machine learning and computer science.
+2. Students will learn how to implement a variety of popular natural language processing methods in R (a free and open-source software) to tackle research problems.
+3. As a researcher, you will acquire the skill of applying data science concepts within natural language processing to improve outcomes and extract insights.

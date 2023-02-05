@@ -1,0 +1,9 @@
+Ted Kwartler Field CTO, DataRobot
+
+LinkedIn URL: https://www.linkedin.com/in/edwardkwartler/
+Pesonal Website: https://www.rstatsbook.com/
+
+
+142 words:
+
+Ted Kwartler is the Field CTO at DataRobot. As Field CTO, Ted helps sets product strategy and supports executive customers with product integration and change management. Ted brings unique insights and experience utilizing data, business acumen and technology ethics to his current and previous executive leadership positions at Liberty Mutual Insurance and Amazon. In addition to having 4 Data Camp courses, he teaches graduate courses at the Harvard Extension School and is the author of multiple textbooks including “Text Mining in Practice with R”, "Sports Analytics in Practice with R", and “Applied Sport Management Analytics." Previously Ted was an advisor to the US Government's Bureau of Economic Affairs, sitting on a Congressionally mandated committee called the “Advisory Committee for Data for Evidence Building” advocating for data-driven policies.  Ted has an MBA with a citation in analytics from the University of Notre Dame.
