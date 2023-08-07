@@ -1,11 +1,11 @@
 #' Purpose: Build a simple word cloud with bi-grams
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
-#' Date: May 23, 2023
+#' Date: Aug 8, 2023
 #'
 
 # Declare the data path
-filePath  <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
+filePath  <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
 
 # Libs
 library(tm)
@@ -40,7 +40,7 @@ stops <- c(stopwords('english'), 'lol', 'amp', 'and', 'chardonnay')
 
 # Bigram token maker
 bigramTokens <-function(x){
-  unlist(lapply(NLP::ngrams(words(x), 2), paste, collapse = " "), 
+  unlist(lapply(NLP::ngrams(words(x), 2), paste, collapse = " "),
          use.names = FALSE)
 }
 
@@ -54,7 +54,7 @@ txtCorpus <- VCorpus(VectorSource(text$text))
 txtCorpus <- cleanCorpus(txtCorpus, stops)
 
 # Make bi-gram TDM according to the tokenize control & convert it to matrix
-wineTDM  <- TermDocumentMatrix(txtCorpus, 
+wineTDM  <- TermDocumentMatrix(txtCorpus,
                                control=list(tokenize=bigramTokens))
 wineTDMm <- as.matrix(wineTDM)
 
@@ -83,7 +83,7 @@ wordcloud(wineDF$word,
           colors       = pal,
           scale        = c(2,1))
 
-pdf('~/Desktop/GSERM_ICPSR/personalFiles/exampleWC.pdf')
+pdf('~/Desktop/UNC_summer2023/personalFiles/exampleWC.pdf')
 wordcloud(wineDF$word,
           wineDF$freq,
           max.words    = 50,
@@ -92,17 +92,17 @@ wordcloud(wineDF$word,
           scale        = c(2,1))
 dev.off()
 
-# More common ggplot interface, Single Color
-ggplot(plotDF, aes(label = word, size = freq, color = 'red')) +
-  geom_text_wordcloud() +
-  theme_minimal() 
-
-
 # More common ggplot interface, scale continuous colors
 plotDF <- wineDF[1:100,]
 ggplot(plotDF, aes(label = word, size = freq, color = freq)) +
   geom_text_wordcloud() +
   theme_minimal() +
   scale_color_gradient(low = "black", high = "red") #scale_color_gradient2(low = 'grey',high='black') will make it a spectrum
+
+# More common ggplot interface, Single Color
+ggplot(plotDF, aes(label = word, size = freq, color = 'red')) +
+  geom_text_wordcloud() +
+  theme_minimal()
+
 
 # End

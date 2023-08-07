@@ -22,7 +22,7 @@ tryTolower <- function(x){
 }
 
 cleanCorpus<-function(corpus, customStopwords){
-  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url)) 
+  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, stripWhitespace)
   corpus <- tm_map(corpus, removeNumbers)
@@ -38,13 +38,13 @@ stops <- c(stopwords('english'), 'lol', 'smh')
 text <- read.csv(filePath)
 
 # Make a volatile corpus
-txtCorpus <- VCorpus(VectorSource(text$x))
+txtCorpus <- VCorpus(VectorSource(text$text))
 
 # Preprocess the corpus
 txtCorpus <- cleanCorpus(txtCorpus, stops)
 
 # Compare a single tweet
-text$x[4]
+text$text[4]
 content(txtCorpus[[4]])
 
 # Make a Document Term Matrix or Term Document Matrix depending on analysis

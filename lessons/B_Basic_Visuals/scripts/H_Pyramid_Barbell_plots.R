@@ -5,8 +5,8 @@
 #'
 
 # Data Input, locally you can use list.files()
-british  <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/BritishAirways.csv'
-ryan     <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/RyanAir.csv'
+british  <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/BritishAirways.csv'
+ryan     <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/RyanAir.csv'
 txtFiles <- c(british, ryan)
 
 # Libs
@@ -40,8 +40,8 @@ cleanCorpus<-function(corpus, customStopwords){
 }
 
 # Create custom stop words
-stops <- c(stopwords('SMART'), 'amp', 'britishairways', 
-           'british', 'flight', 'flights', 'airways', 
+stops <- c(stopwords('SMART'), 'amp', 'britishairways',
+           'british', 'flight', 'flights', 'airways',
            'ryanair', 'airline', 'flying')
 
 # Read in Data, collapse, clean & organize.  For advanced programming students, this could be done with a custom function
@@ -79,7 +79,7 @@ pyramid.plot(lx         = top35$britishAir, #left
              top.labels = c('britishAir', 'Terms', 'ryanAir'), #corpora
              gap        = 5, # space for terms to be read
              main       = 'Words in Common', # title
-             unit       = 'wordFreq') 
+             unit       = 'wordFreq')
 
 # ggplot interface
 # ggplot needs a defined "character class"
@@ -87,9 +87,9 @@ class(top35$terms) #inherited from "merge()"
 top35$terms <- as.character(top35$terms)
 
 p <- ggplot(top35, aes(x = terms)) +
-  geom_bar(aes(y = britishAir, fill = "British Airways"), 
+  geom_bar(aes(y = britishAir, fill = "British Airways"),
            stat = "identity", width = 0.8) +
-  geom_bar(aes(y = -ryanAir, fill = "RyanAir"), 
+  geom_bar(aes(y = -ryanAir, fill = "RyanAir"),
            stat = "identity", width = 0.8) +
   coord_flip() +
   scale_fill_manual(values = c("blue", "red"), name = "") +
@@ -100,9 +100,9 @@ p
 
 # Change the aesthetics
 p2 <- ggplot(top35, aes(x = terms)) +
-  geom_bar(aes(y = britishAir, fill = "British Airways"), 
+  geom_bar(aes(y = britishAir, fill = "British Airways"),
            stat = "identity", width = 0.4, alpha = 0.5) +
-  geom_bar(aes(y = -ryanAir, fill = "RyanAir"), 
+  geom_bar(aes(y = -ryanAir, fill = "RyanAir"),
            stat = "identity", width = 0.4, alpha = 0.5) +
   geom_point(data = top35, aes(y = britishAir), color = 'blue', alpha = 0.75) +
   geom_point(data = top35, aes(y = -ryanAir), color = 'red', alpha = .75) +

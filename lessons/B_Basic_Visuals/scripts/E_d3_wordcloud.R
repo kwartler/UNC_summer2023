@@ -5,7 +5,7 @@
 #'
 
 # Declare the data path
-filePath  <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
+filePath  <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
 
 # Libs
 library(tm)
@@ -41,7 +41,7 @@ stops <- c(stopwords('english'), 'lol', 'amp', 'chardonnay')
 
 # Bigram token maker
 bigramTokens <-function(x){
-  unlist(lapply(NLP::ngrams(words(x), 2), paste, collapse = " "), 
+  unlist(lapply(NLP::ngrams(words(x), 2), paste, collapse = " "),
          use.names = FALSE)
 }
 
@@ -55,7 +55,7 @@ txtCorpus <- VCorpus(VectorSource(text$text))
 txtCorpus <- cleanCorpus(txtCorpus, stops)
 
 # Make bi-gram TDM according to the tokenize control & convert it to matrix
-wineTDM  <- TermDocumentMatrix(txtCorpus, 
+wineTDM  <- TermDocumentMatrix(txtCorpus,
                                control=list(tokenize=bigramTokens))
 wineTDMm <- as.matrix(wineTDM)
 
@@ -73,8 +73,8 @@ wordcloud2(data = wineDF[1:50,])
 
 # Choose a color & drop light ones
 pal <- brewer.pal(8, "Dark2")
-wordcloud2(wineDF[1:50,], 
-           color = pal, 
+wordcloud2(wineDF[1:50,],
+           color = pal,
            backgroundColor = "lightgrey")
 
 # Some built in shapes need to click "show in new window"
@@ -85,18 +85,18 @@ wordcloud2(wineDF[1:50,],
            backgroundColor = "pink")
 
 # Now let's use a more up to date package echarts4r
-wineDF[1:50,] %>% 
+wineDF[1:50,] %>%
   e_color_range(freq, color, colors = c("tomato", "goldenrod")) %>% # Append the column name color, with the colors hex codes
-  e_charts() %>% 
+  e_charts() %>%
   e_cloud(
-    word = word, 
-    freq = freq, 
-    color = color, 
+    word = word,
+    freq = freq,
+    color = color,
     shape = "circle",
     rotationRange = c(0, 0),
     sizeRange = c(15, 100)
-  ) %>% 
-  e_tooltip() %>% 
+  ) %>%
+  e_tooltip() %>%
   e_title("Chardonnay")
 
 

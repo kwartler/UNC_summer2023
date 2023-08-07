@@ -5,8 +5,8 @@
 #'
 
 # Data Input, locally you can use list.files()
-chardonnay <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
-coffee     <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/coffee.csv'
+chardonnay <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
+coffee     <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/coffee.csv'
 txtFiles <- c(chardonnay, coffee)
 
 # Topic names
@@ -60,7 +60,7 @@ chardonnay <- VCorpus(VectorSource(chardonnay$text))
 coffee       <- cleanCorpus(coffee, stops)
 chardonnay <- cleanCorpus(chardonnay, stops)
 
-# Another way to extract the cleaned text 
+# Another way to extract the cleaned text
 coffee       <- unlist(lapply(coffee, content))
 chardonnay <- unlist(lapply(chardonnay, content))
 
@@ -86,8 +86,8 @@ colnames(drinkTDMm) <- c('coffee', 'chardonnay')
 head(drinkTDMm)
 
 # Make comparison cloud
-comparison.cloud(drinkTDMm, 
-                 max.words=75, 
+comparison.cloud(drinkTDMm,
+                 max.words=75,
                  random.order=FALSE,
                  title.size=0.5,
                  colors=brewer.pal(ncol(drinkTDMm),"Dark2"),

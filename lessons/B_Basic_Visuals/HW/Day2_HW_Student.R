@@ -1,11 +1,11 @@
 #' Title: GSERM REMOTE DAY 2 HW
 #' Purpose: 20pts...where you paying attention?
-#' NAME: 
+#' NAME:
 #' Date: Dec 29 2020
 
 #### 5PTs
 # Data Path
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/HW/beer.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/HW/beer.csv'
 
 # Load the following libraries ggplot2, ggthemes, tm & wordcloud
 library(________)
@@ -78,7 +78,7 @@ coffeeTerms <- data.frame(terms=names(_________[[1]]),
                           value=______(________))
 
 # Just a utility to make the ggplot nicer, leave this alone
-coffeeTerms$terms <- factor(coffeeTerms$terms, 
+coffeeTerms$terms <- factor(coffeeTerms$terms,
                         levels=coffeeTerms$terms)
 rownames(coffeeTerms) <- NULL
 
@@ -88,31 +88,31 @@ rownames(coffeeTerms) <- NULL
 # add a theme using fivethirtyeight colors
 ggplot(______, aes(y = _____)) +
   __________(aes(x = _____), data = ___________, col = '#c00c00') +
-  ________________() + 
-  geom_text(aes(x = value, label = value), 
-            colour = "red", hjust = "inward", 
-            vjust = "inward" , size= 3) 
+  ________________() +
+  geom_text(aes(x = value, label = value),
+            colour = "red", hjust = "inward",
+            vjust = "inward" , size= 3)
 
 #### 5PTs
 # Make a barplot using ggplot2 of the top 30 terms, make sure bars are ordered from most frequent to least
 
 # Subset the WFM so you have ~30 terms in the topWords object
-topWords      <- subset(beerWFM, beerWFM$freq >= __) 
+topWords      <- subset(beerWFM, beerWFM$freq >= __)
 
 # Change topWords to a factor, just leave this alone.
-topWords$term <- factor(topWords$term, 
-                        levels=unique(as.character(topWords$term))) 
+topWords$term <- factor(topWords$term,
+                        levels=unique(as.character(topWords$term)))
 
 # Create a bar plot
-# add  theme_tufte() 
-ggplot(topWords, aes(x = term, y = freq)) + 
-  _______(stat="identity", fill='darkred') + 
+# add  theme_tufte()
+ggplot(topWords, aes(x = term, y = freq)) +
+  _______(stat="identity", fill='darkred') +
   coord_flip() + __________() +
-  geom_text(aes(label = freq), colour = "white", 
+  geom_text(aes(label = freq), colour = "white",
             hjust = 1.25, size = 3.0)
 
 #### 5PTs
-# Construct a simple wordcloud with 
+# Construct a simple wordcloud with
 # maximum words equal to 100
 # c('#c0c0c0', '#bada55', '#10aded')
 wordcloud(beerWFM$____,

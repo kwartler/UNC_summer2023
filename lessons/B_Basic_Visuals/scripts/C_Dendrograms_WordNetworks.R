@@ -5,7 +5,7 @@
 #'
 
 # Declare the data path
-filePath  <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/BritishAirways.csv'
+filePath  <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/BritishAirways.csv'
 
 # Libs
 library(tm)
@@ -45,7 +45,7 @@ txtCorpus <- cleanCorpus(txtCorpus, stops)
 tweetTDM  <- TermDocumentMatrix(txtCorpus)
 
 # Reduce TDM
-reducedTDM <- removeSparseTerms(tweetTDM, sparse=0.985) #shoot for ~50 terms; 1.5% of cells in row have a value  
+reducedTDM <- removeSparseTerms(tweetTDM, sparse=0.985) #shoot for ~50 terms; 1.5% of cells in row have a value
 reducedTDM
 
 # Organize the smaller TDM
@@ -62,15 +62,15 @@ networkStops <- c(stops, 'britishairways', 'british', 'airways', 'rt')
 assocText <- rm_url(text$text)
 
 # MORE QDAP!
-word_associate(assocText, 
-               match.string = 'brewdog', 
+word_associate(assocText,
+               match.string = 'brewdog',
                stopwords = networkStops,
                network.plot = T,
                cloud.colors = c('black','darkred'))
 
 # MORE QDAP!
-word_associate(assocText, 
-               match.string = 'brewdog', 
+word_associate(assocText,
+               match.string = 'brewdog',
                stopwords = networkStops,
                wordcloud = T,
                cloud.colors = c('black','darkred'))

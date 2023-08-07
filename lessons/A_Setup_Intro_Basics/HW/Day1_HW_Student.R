@@ -1,6 +1,6 @@
 #' Title: NLP HW 1
 #' Purpose: 20pts...were you paying attention?
-#' NAME: 
+#' NAME:
 #' Date: Dec 29 2020
 
 #### 1PT
@@ -12,17 +12,17 @@ library(______)
 library(stringi)
 
 # load the homework data in an object called `text`
-text <- read.csv("https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/HW/Dec292020Tweets.csv")
+text <- read.csv("https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/HW/Dec292020Tweets.csv")
 
 #### 1PT
-# 
+#
 # Examine the first 10 rows of data
 head(_____, 10)
 
 # Print the column names to console. HINT: function is names()
 names(_____)
 
-# What is the first tweet text? 
+# What is the first tweet text?
 ____$____[1]
 # Answer:
 
@@ -36,7 +36,7 @@ ___ <- grep('____', ____$____, ignore.case = T)
 
 # What is the length of idx?
 ______(___)
-# Answer: 
+# Answer:
 
 # What is the tenth text mentioning "virus"
 # hint: someObject$someColumnName[idx[someNumber]]
@@ -48,11 +48,11 @@ ___ <- ____('____', ______, ignore.case = T)
 
 # Now what is the length of idx?
 
-# Answer: 
+# Answer:
 
 # As a percent, how many tweets mention "virus" among all tweets?
 ___(___)/nrow(____)
-# Answer: 
+# Answer:
 
 #### 5 PTs
 # Write a function accepting a text column
@@ -85,8 +85,8 @@ termFreq <- data.frame(terms = c('trump','biden','vterms'),
 termFreq
 
 # Plot it with ggplot2 by filling in the correct data, adding a layers "theme_gdocs() + theme(legend.position = "none")"
-ggplot(________, aes(x = reorder(terms, freq), y = freq,fill=freq)) + 
-  geom_bar(stat = "identity") + coord_flip() + 
+ggplot(________, aes(x = reorder(terms, freq), y = freq,fill=freq)) +
+  geom_bar(stat = "identity") + coord_flip() +
   ___________() + _____(_______________ = "____")
 
 #### 8 PTs
@@ -98,7 +98,7 @@ stops <- c(stopwords('_____'), '____')
 # add into the function removeNumbers
 # add into the function stripWhitespace
 cleanCorpus<-function(corpus, customStopwords){
-  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url)) 
+  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
   corpus <- tm_map(corpus, content_transformer(tolower))
   corpus <- tm_map(corpus, removeWords, customStopwords)
   corpus <- tm_map(corpus, _________________)
@@ -117,16 +117,16 @@ cleanTxt <- ___________(cleanTxt, stops)
 # Construct a DTM
 cleanDTM  <- __________________(cleanTxt)
 
-# Switch this to a simple matrix 
+# Switch this to a simple matrix
 cleanMat <- _________(cleanDTM)
 
 # What are the dimensions of this matrix
 ___(cleanMat)
 
 # What do rows represent in this matrix?
-# Answer: 
+# Answer:
 
 # How many unique words exist in the matrix?
-# Answer: 
+# Answer:
 
 # End

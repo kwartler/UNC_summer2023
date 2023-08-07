@@ -5,7 +5,7 @@
 #'
 
 # Declare the data path
-filePath  <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/BritishAirways.csv'
+filePath  <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/BritishAirways.csv'
 
 # Libs
 library(tm)
@@ -54,15 +54,15 @@ tweetFreq <- data.frame(word=names(tweetSums),frequency=tweetSums, row.names = N
 tweetFreq[50:55,]
 
 # Simple barplot; values greater than 15
-topWords      <- subset(tweetFreq, tweetFreq$frequency >= 15) 
+topWords      <- subset(tweetFreq, tweetFreq$frequency >= 15)
 topWords      <- topWords[order(topWords$frequency, decreasing=F),]
 
 # Chg to factor for ggplot
-topWords$word <- factor(topWords$word, 
-                        levels=unique(as.character(topWords$word))) 
+topWords$word <- factor(topWords$word,
+                        levels=unique(as.character(topWords$word)))
 
-ggplot(topWords, aes(x=word, y=frequency)) + 
-  geom_bar(stat="identity", fill='darkred') + 
+ggplot(topWords, aes(x=word, y=frequency)) +
+  geom_bar(stat="identity", fill='darkred') +
   coord_flip()+ theme_gdocs() +
   geom_text(aes(label=frequency), colour="white",hjust=1.25, size=3.0)
 
@@ -77,7 +77,7 @@ associations
 
 # Organize the word associations
 assocDF <- data.frame(terms=names(associations[[1]]),
-                       value=unlist(associations), 
+                       value=unlist(associations),
                       row.names = NULL)
 assocDF$terms <- factor(assocDF$terms, levels=assocDF$terms)
 assocDF
@@ -85,7 +85,7 @@ assocDF
 # Make a dot plot
 ggplot(assocDF, aes(y=terms)) +
   geom_point(aes(x=value), data=assocDF, col='#c00c00') +
-  theme_gdocs() + 
-  geom_text(aes(x=value,label=value), colour="red",hjust="inward", vjust ="inward" , size=3) 
+  theme_gdocs() +
+  geom_text(aes(x=value,label=value), colour="red",hjust="inward", vjust ="inward" , size=3)
 
 # End

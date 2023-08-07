@@ -7,8 +7,8 @@
 #'
 
 # Data Input, locally you can use list.files()
-chardonnay <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
-coffee     <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/B_Basic_Visuals/data/coffee.csv'
+chardonnay <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/chardonnay.csv'
+coffee     <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/B_Basic_Visuals/data/coffee.csv'
 txtFiles <- c(chardonnay, coffee)
 
 # Topic names
@@ -58,7 +58,7 @@ coffee     <- VCorpus(VectorSource(coffee$text))
 chardonnay <- cleanCorpus(chardonnay, stops)
 coffee     <- cleanCorpus(coffee, stops)
 
-# Another way to extract the cleaned text 
+# Another way to extract the cleaned text
 chardonnay <- unlist(lapply(chardonnay, content))
 coffee     <- unlist(lapply(coffee, content))
 
@@ -90,8 +90,8 @@ colnames(drinkTDMm) <- topicNames
 head(drinkTDMm)
 
 # Plot the frequent & in common terms
-commonality.cloud(drinkTDMm, 
-                  max.words=150, 
+commonality.cloud(drinkTDMm,
+                  max.words=150,
                   random.order=FALSE,
                   colors='blue',
                   scale=c(3.5,0.25))
