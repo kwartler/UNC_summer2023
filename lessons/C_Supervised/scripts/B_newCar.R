@@ -1,7 +1,7 @@
 #' Author: Ted Kwartler
 #' Date: May 28, 2023
 #' Purpose: Toyota Corolla Regression example
-#' 
+#'
 
 # Libs
 library(vtreat)
@@ -12,13 +12,13 @@ library(ModelMetrics)
 options(scipen=999)
 
 # Data
-cars <- read.csv('https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/D_Supervised/data/newCars.csv') 
+cars <- read.csv('https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/C_Supervised/data/newCars.csv')
 
 # drop geo and text for this example
 cars$state       <- NULL
 cars$city        <- NULL
 cars$allFeatures <- NULL
-cars$monthlyPayment <- NULL # Target Leakage!  
+cars$monthlyPayment <- NULL # Target Leakage!
 
 # Partitioning 20% test set
 splitPercent <- round(nrow(cars) %*% .8)
@@ -39,8 +39,8 @@ outcomeVariableName     <- names(cars)[25] # Or simply "listPrice"
 
 # Preprocessing & Automated Engineering
 # id & constant variable removal, dummy $Fuel_Type
-dataPlan     <- designTreatmentsN(cars, 
-                                  informativeFeatureNames, 
+dataPlan     <- designTreatmentsN(cars,
+                                  informativeFeatureNames,
                                   outcomeVariableName)
 
 treatedTrain <- prepare(dataPlan, trainSet)
@@ -55,13 +55,13 @@ summary(fit)
 
 # Drop uninformative vars
 # Primarily these are nearly univariate (single value)
-# Hybrid is captured in the mileage stats so its multi-colinear! 
+# Hybrid is captured in the mileage stats so its multi-colinear!
 
 # First get the variable and p-values
 pVals <- data.frame(varNames = names(na.omit(coef(fit))),
                     pValues = summary(fit)$coefficients[,4])
 
-# Determine which variable names to keep 
+# Determine which variable names to keep
 keeps <- subset(pVals$varNames, pVals$pValues<0.1)
 
 # Remove unwanted columns
@@ -79,7 +79,7 @@ summary(fit2)
 #################
 
 # Get Training Set Predictions
-# Warning can be ignored but for those interested: 
+# Warning can be ignored but for those interested:
 # https://stackoverflow.com/questions/26558631/predict-lm-in-a-loop-warning-prediction-from-a-rank-deficient-fit-may-be-mis
 trainingPreds <- predict(fit2, treatedTrainParsimony)
 
@@ -89,8 +89,8 @@ trainingResults <-data.frame(actuals        = treatedTrainParsimony$listPrice,
                              residualErrors = treatedTrainParsimony$listPrice-trainingPreds )
 head(trainingResults)
 
-# What is the RMSE? 
-trainRMSE <- MLmetrics::RMSE(trainingResults$predicted, 
+# What is the RMSE?
+trainRMSE <- MLmetrics::RMSE(trainingResults$predicted,
                               trainingResults$actuals)
 trainRMSE
 
@@ -98,7 +98,7 @@ trainRMSE
 # Since we haven't looked at the test set, we *could* go back and adjust the model.
 # Let's continue to the test set evaluation
 treatedTest <- prepare(dataPlan, testSet)
-testPreds   <- predict(fit2, treatedTest) 
+testPreds   <- predict(fit2, treatedTest)
 
 #Organize training set preds
 testResults <- data.frame(actuals   = testSet$listPrice,
@@ -106,7 +106,7 @@ testResults <- data.frame(actuals   = testSet$listPrice,
 head(testResults)
 
 # KPI
-testRMSE <- MLmetrics::RMSE(testResults$predicted, 
+testRMSE <- MLmetrics::RMSE(testResults$predicted,
                              testResults$actuals)
 testRMSE
 
@@ -115,5 +115,5 @@ trainRMSE
 testRMSE
 
 
-# End 
+# End
 

@@ -1,11 +1,11 @@
-#' Purpose: Build an elastic net for classification 
+#' Purpose: Build an elastic net for classification
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' Date: May 28, 2023
 #'
 
 # Data Path
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/D_Supervised/data/diabetes_subset_8500.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/C_Supervised/data/diabetes_subset_8500.csv'
 
 # Libs
 library(text2vec)
@@ -40,12 +40,12 @@ head(trainDiabetesTxt$diagnosisText,2)
 table(trainDiabetesTxt$readmitted)
 
 ### MODIFY
-# 
+#
 trainDiabetesTxt$diagnosisText <- diagnosisClean(trainDiabetesTxt$diagnosisText)
 
 # Initial iterator to make vocabulary
-iterMaker <- itoken(trainDiabetesTxt$diagnosisText, 
-                    preprocess_function = list(tolower), 
+iterMaker <- itoken(trainDiabetesTxt$diagnosisText,
+                    preprocess_function = list(tolower),
                     progressbar         = T)
 textVocab <- create_vocabulary(iterMaker, stopwords=stopwords('SMART'))
 head(textVocab)
@@ -59,10 +59,10 @@ prunedtextVocab <- prune_vocabulary(textVocab,
                                     doc_proportion_min = 0.001)
 nrow(prunedtextVocab)
 
-# Using the pruned vocabulary to declare the DTM vectors 
+# Using the pruned vocabulary to declare the DTM vectors
 vectorizer <- vocab_vectorizer(prunedtextVocab)
 
-# Take the vocabulary lexicon and the pruned text function to make a DTM 
+# Take the vocabulary lexicon and the pruned text function to make a DTM
 diabetesDTM <- create_dtm(iterMaker, vectorizer)
 dim(diabetesDTM)
 
@@ -86,7 +86,7 @@ head(coefficients(textFit),10)
 plot(textFit)  # high enough penalty the AUC (area under the curve, similar to accuracy) plummets
 
 # Subset to terms with coefficients assigned
-bestTerms <- as.data.frame(subset(as.matrix(coefficients(textFit)), 
+bestTerms <- as.data.frame(subset(as.matrix(coefficients(textFit)),
                     as.matrix(coefficients(textFit)) !=0))
 bestTerms$terms <- rownames(bestTerms)
 
@@ -106,14 +106,14 @@ confusionMatrix(as.factor(trainingPreds),
 ## Check the pptx for evaluating new data
 
 ### Apply to new patients requires the construction of the new patient DTM exactly as the training set
-testPatients   <- itoken(testDiabetesTxt$diagnosisText, 
+testPatients   <- itoken(testDiabetesTxt$diagnosisText,
                    tokenizer = word_tokenizer)
 
 # Use the same vectorizer but with new iterator (vocabulary from the new unseen rows)
 testDTM <-create_dtm(testPatients,vectorizer)
 dim(testDTM)
 
-# Score the unseen data 
+# Score the unseen data
 testPreds   <- predict(textFit,
                        testDTM,
                        type = 'class',
@@ -127,3 +127,4 @@ confMatTest
 sum(diag(confMatTest))/sum(confMatTest)
 
 # End
+

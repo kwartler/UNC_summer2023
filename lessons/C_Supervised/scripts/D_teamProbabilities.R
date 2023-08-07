@@ -11,7 +11,7 @@ library(pROC)
 library(ggplot2)
 
 # Data location
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/D_Supervised/data/ncaa.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/C_Supervised/data/ncaa.csv'
 
 # Data
 bball <- read.csv(filePath)
@@ -25,8 +25,8 @@ informativeVars <- names(bball)[3:47]
 head(bball[,1:7])
 head(bball[,47:51])
 
-# Design a "C"ategorical variable plan 
-plan <- designTreatmentsC(bball, 
+# Design a "C"ategorical variable plan
+plan <- designTreatmentsC(bball,
                           informativeVars,
                           targetVar, 1)
 
@@ -51,7 +51,7 @@ length(coefficients(bestFit))
 teamPreds <- predict(bestFit, type='response')
 head(teamPreds)
 
-# Classify 
+# Classify
 cutoff <- 0.5
 teamClasses <- ifelse(teamPreds >= cutoff, 1,0)
 
@@ -72,7 +72,7 @@ sum(diag(confMat)) / sum(confMat)
 
 # Visually how well did we separate our classes?
 ggplot(results, aes(x=teamPreds, color=as.factor(actual))) +
-  geom_density() + 
+  geom_density() +
   geom_vline(aes(xintercept = cutoff), color = 'green')
 
 

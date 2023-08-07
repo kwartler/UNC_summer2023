@@ -9,7 +9,7 @@ library(ggplot2)
 library(dplyr)
 
 # Data
-diamonds <- read.csv('https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/D_Supervised/data/diamonds2023.csv')
+diamonds <- read.csv('https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/C_Supervised/data/diamonds2023.csv')
 
 # Convert to binary
 diamonds$icedOut <- ifelse(diamonds$priceClean >= 11000,1, 0)
@@ -19,7 +19,7 @@ set.seed(1234)
 sampDiamonds <- sample_n(diamonds, 10000)
 
 # Remember this?
-p <- ggplot(sampDiamonds, aes(Carat, icedOut)) + 
+p <- ggplot(sampDiamonds, aes(Carat, icedOut)) +
   geom_point(alpha = 0.2)
 p
 

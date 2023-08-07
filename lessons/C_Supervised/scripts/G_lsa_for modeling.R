@@ -5,8 +5,8 @@
 #' Date: May 28, 2023
 
 # Data Folder
-folderPaths <- list.dirs(path = '~/Desktop/GSERM_ICPSR/lessons/D_Supervised/data/AutoAndElectronics')
-savePath <- '~/Desktop/GSERM_ICPSR/lessons/D_Supervised/data/'
+folderPaths <- list.dirs(path = '~/Desktop/UNC_summer2023/lessons/C_Supervised/data/AutoAndElectronics')
+savePath <- '~/Desktop/UNC_summer2023/lessons/C_Supervised/data/'
 
 # Libs
 library(tm)
@@ -61,15 +61,16 @@ gc()
 yTarget <- c(rep(1,1000), rep(0,1000)) #1= about cars, 0 = electronics
 
 # Make TDM; lsa docs save DTM w/"documents in columns, terms in rows and occurrence frequencies in the cells."!
-allTDM <- TermDocumentMatrix(allPosts, 
+allTDM <- TermDocumentMatrix(allPosts,
                              control = list(weighting = weightTfIdf))
 allTDM
 
 # Get 20 latent topics
 ##### Takes awhile, may crash small RAM computers, so saved a copy
 #lsaTDM <- lsa(allTDM, 20)
-#saveRDS(lsaTDM, paste0(savePath, Sys.Date(),'_lsaTDM_tfidf_.rds'))#be sure to declare the right wd!
-lsaTDM <- readRDS(paste0(savePath, '2023-05-28_lsaTDM_tfidf_.rds'))
+#saveRDS(lsaTDM, paste0(savePath, Sys.Date(),'_lsaTDM_tfidf_.rds'))#be sure to declare the right path!
+tmp <- list.files(savePath, '.rds', full.names = T)
+lsaTDM <- readRDS(tmp)
 
 ### If you have new data/docs and have a model built using the original lsa() you need to treat the new values like this:
 # Transform new, unseen data into the lower-dimensional LSA space

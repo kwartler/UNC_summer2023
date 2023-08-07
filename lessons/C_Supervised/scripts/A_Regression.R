@@ -1,7 +1,7 @@
 #' Author: Ted Kwartler
 #' Date: 2-19-2023
 #' Purpose: Build a regression model
-#' 
+#'
 
 # libs
 library(ggplot2)
@@ -9,7 +9,7 @@ library(ggthemes)
 library(dplyr)
 
 # Data
-diamonds <- read.csv('https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/D_Supervised/data/diamonds2023.csv')
+diamonds <- read.csv('https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/C_Supervised/data/diamonds2023.csv')
 
 # EDA
 summary(diamonds)
@@ -22,7 +22,7 @@ quantile(diamonds$priceClean, probs = seq(.1,.95, by = .05))
 dropAmt <- tail(quantile(diamonds$priceClean, probs = seq(.1,.95, by = .05)), 1)
 diamonds <- subset(diamonds, diamonds$priceClean<dropAmt)
 
-# Build a scatter plot to show relationship 
+# Build a scatter plot to show relationship
 p <- ggplot(diamonds, aes(Carat, priceClean)) + geom_point(alpha=0.02) + theme_gdocs()
 p
 
@@ -31,8 +31,8 @@ fit <- lm(priceClean ~ Carat + 0, diamonds)
 fit
 
 # Add out model predictions
-p <- p + geom_abline(intercept =  0, 
-                     slope = coefficients(fit), 
+p <- p + geom_abline(intercept =  0,
+                     slope = coefficients(fit),
                      color='red') +
   theme_gdocs()
 p

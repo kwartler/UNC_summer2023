@@ -5,7 +5,7 @@
 #'
 
 # Data Path
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/D_Supervised/data/diabetes_subset_8500.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/C_Supervised/data/diabetes_subset_8500.csv'
 
 # Libs
 library(text2vec)
@@ -45,8 +45,8 @@ table(trainDiabetesTxt$readmitted)
 trainDiabetesTxt$diagnosisText <- diagnosisClean(trainDiabetesTxt$diagnosisText)
 
 # Initial iterator to make vocabulary
-iterMaker <- itoken(trainDiabetesTxt$diagnosisText, 
-                    preprocess_function = list(tolower), 
+iterMaker <- itoken(trainDiabetesTxt$diagnosisText,
+                    preprocess_function = list(tolower),
                     progressbar         = T)
 textVocab <- create_vocabulary(iterMaker, stopwords=stopwords('SMART'))
 head(textVocab)
@@ -60,10 +60,10 @@ prunedtextVocab <- prune_vocabulary(textVocab,
                                     doc_proportion_min = 0.001)
 nrow(prunedtextVocab)
 
-# Using the pruned vocabulary to declare the DTM vectors 
+# Using the pruned vocabulary to declare the DTM vectors
 vectorizer <- vocab_vectorizer(prunedtextVocab)
 
-# Take the vocabulary lexicon and the pruned text function to make a DTM 
+# Take the vocabulary lexicon and the pruned text function to make a DTM
 diabetesDTM <- create_dtm(iterMaker, vectorizer)
 dim(diabetesDTM)
 
@@ -91,8 +91,8 @@ noTextFit <- cv.glmnet(noText,
                        y=as.factor(trainDiabetesTxt$readmitted),
                        alpha=0.9,
                        family='binomial',
-                       type.measure='auc', 
-                       nfolds=5, 
+                       type.measure='auc',
+                       nfolds=5,
                        intercept=F)
 
 # Fit with text and the other data
@@ -133,8 +133,6 @@ MLmetrics::Accuracy(textPreds,trainDiabetesTxt$readmitted*1 )
 MLmetrics::Accuracy(noTextPreds,trainDiabetesTxt$readmitted*1)
 MLmetrics::Accuracy(allPreds, trainDiabetesTxt$readmitted*1)
 
-### Go to PPTX
-
 #compare AUC
 textROC     <- roc((trainDiabetesTxt$readmitted*1), textPreds*1)
 noTextROC   <- roc((trainDiabetesTxt$readmitted*1), noTextPreds*1)
@@ -145,7 +143,7 @@ plot(noTextROC, add=TRUE,col="red", lty=2)
 plot(allROC,add=TRUE,col="darkgreen", lty=3)
 
 ### Apply to new patients requires the construction of the new patient DTM exactly as the training set
-testIT   <- itoken(testDiabetesTxt$diagnosisText, 
+testIT   <- itoken(testDiabetesTxt$diagnosisText,
                    tokenizer = word_tokenizer)
 
 # Use the same vectorizer but with new iterator
