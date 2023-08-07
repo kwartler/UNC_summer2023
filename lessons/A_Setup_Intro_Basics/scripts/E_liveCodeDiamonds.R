@@ -1,5 +1,5 @@
 # Author: TK
-# date: May 24
+# date: Aug 7, 2023
 # purpose: build some plots with diamonds data set
 
 # libraries
@@ -10,16 +10,17 @@ library(ggthemes)
 data("diamonds")
 
 # basic EDA, look at top 6, structure, summary stats, and column names
-
+names(diamonds)
 
 # Pivot price by cut to get the average using aggregate()
-priceByCut 
+priceByCut <- aggregate()
 
 
 # Find the largest table diamond, max and which.max
 
 
 # stop using a tibble and make it a data frame
+class(diamonds)
 diamonds <- as.data.frame(diamonds)
 
 # tally by the color column
@@ -29,7 +30,7 @@ diamonds <- as.data.frame(diamonds)
 
 
 # subset by clarity to be VVS2 which is clearest
-plotDF 
+plotDF
 
 # ggplot to make a red distribution
 ggplot(data = ____, aes(x = ____)) +
@@ -39,7 +40,7 @@ ggplot(data = ____, aes(x = ____)) +
 
 # Facet Wrap example with clarity~. formula
 ggplot(data = ____, aes(x=____)) +
-  geom_density(color = '___') + 
+  geom_density(color = '___') +
   facet_wrap(___) +
   theme_few()
 
@@ -53,11 +54,11 @@ ggplot(diamonds[smallerDiamondsIDX,], aes(x = carat, y = price)) +
 
 # Double subset AND conditions
 # clarity == 'VVS2'
-# cut == 'Premium' 
-# color== 'J' 
+# cut == 'Premium'
+# color== 'J'
 # carat >=1.2
 smallDF <- ____(____,  ____ )
 
-# Get the average of this subset
+# Get the average price of this subset
 mean(smallDF$price)
 # End

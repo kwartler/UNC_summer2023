@@ -8,13 +8,13 @@
 ### 1. Set the path to our ata
 # URL to the file
 # Lego
-# 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/lego_onScreenCharacters.csv
+# 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/lego_onScreenCharacters.csv'
 # Force Awakens
-# 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/forceAwakens_onScreenCharacters.csv'
+# 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/forceAwakens_onScreenCharacters.csv'
 # Mary Poppins
-# 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/poppins_onScreenCharacters.csv'
+# 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/poppins_onScreenCharacters.csv'
 
-movieURL <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/forceAwakens_onScreenCharacters.csv'
+movieURL <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/forceAwakens_onScreenCharacters.csv'
 
 # Turn off scientific notation
 options(scipen = 999)
@@ -55,9 +55,9 @@ charDF$dupes <- duplicated(charDF) #T/F if it is duplicated
 head(charDF)
 
 # Show any rows that are TRUE duplicates; don't worry about grep...we cover it later
-charDF[grep('TRUE', charDF$dupes),] 
+charDF[grep('TRUE', charDF$dupes),]
 
-# drop dupes 
+# drop dupes
 nrow(charDF)
 charDF <- subset(charDF, charDF$dupes != TRUE)
 nrow(charDF)
@@ -75,7 +75,7 @@ charTally
 barplot(t(charTally), las = 2)
 
 # Timeline of character appearances
-ggplot(charDF, aes(colour = character)) + 
+ggplot(charDF, aes(colour = character)) +
   geom_segment(aes(x = appearanceSecs, xend = sceneEndSecs,
                    y = character, yend = character), linewidth = 3) +
   theme_gdocs() + theme(legend.position = "none")
@@ -87,7 +87,7 @@ topPerformers <- sort(charTally[,1], decreasing = T)[1:n]
 names(topPerformers)
 
 topChars <- charDF[charDF$character %in% names(topPerformers),]
-ggplot(topChars, aes(colour = character)) + 
+ggplot(topChars, aes(colour = character)) +
   geom_segment(aes(x = appearanceSecs, xend = sceneEndSecs,
                    y = character, yend = character),size=3) +
   theme_gdocs() + theme(legend.position = "none")

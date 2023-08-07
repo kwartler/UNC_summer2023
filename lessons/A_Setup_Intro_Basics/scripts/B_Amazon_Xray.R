@@ -6,16 +6,16 @@
 
 ### 1. Set the path to our data
 # Force Awakens
-# 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/forceAwakens_definedScenes.csv'
+# 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/forceAwakens_definedScenes.csv'
 
 # Lego Movie
-# 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/lego_definedScenes.csv'
+# 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/lego_definedScenes.csv'
 
 # Mary Poppins
-# https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/poppins_definedScenes.csv
+# https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/poppins_definedScenes.csv
 
 # URL to the file
-movieURL <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/lego_definedScenes.csv'
+movieURL <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/lego_definedScenes.csv'
 
 
 # Turn off scientific notation
@@ -47,17 +47,17 @@ scenesDF$id <- as.numeric(scenesDF$id)
 scenesDF$fictionalLocation <- NULL
 
 # Make a new column & review
-scenesDF$length <- scenesDF$end - scenesDF$start 
+scenesDF$length <- scenesDF$end - scenesDF$start
 head(scenesDF$length)
 
 # Basic statistics
-summary(scenesDF) 
+summary(scenesDF)
 
 ### 5. Project artifacts ie visuals & (if applicable)modeling results/KPI
 # Quick plot
 hist(scenesDF$length)
 summary((scenesDF$length/1000) %/% 60)
-# Modulo ie "small measure" %% will return the remainder 
+# Modulo ie "small measure" %% will return the remainder
 # While %/% returns the integer only
 
 # Identify the outlier, review; note the double ==
@@ -72,8 +72,8 @@ unique(scenesDF$name)
 scenesDF$name <- stringi::stri_encode(scenesDF$name, "", "UTF-8")
 
 # Create a variable to name your movie
-# 'Mary Poppins' 'Star Wars' 'Lego Movie' 
-movieTitle <- 'Lego Movie' 
+# 'Mary Poppins' 'Star Wars' 'Lego Movie'
+movieTitle <- 'Lego Movie'
 
 # Apply a logical operator
 plotDF <- switch(movieTitle,
@@ -82,10 +82,10 @@ plotDF <- switch(movieTitle,
                  'Lego Movie'   = scenesDF[1:15,])
 
 ################ BACK TO PPT FOR EXPLANATION ##################
-ggplot(plotDF, aes(colour = name)) + 
+ggplot(plotDF, aes(colour = name)) +
   geom_segment(aes(x = start, xend = end,
                    y = id,    yend = id), linewidth = 3) +
-  geom_text(data=plotDF, aes(x = end, y = id, label = name), 
+  geom_text(data=plotDF, aes(x = end, y = id, label = name),
             size = 2.25, color = 'black', alpha = 0.5, check_overlap = TRUE) +
   theme_gdocs() + theme(legend.position = "none") +
   ggtitle(movieTitle)

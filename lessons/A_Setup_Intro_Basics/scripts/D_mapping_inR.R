@@ -13,10 +13,10 @@ library(leaflet)
 library(mapproj)
 
 # Define our data path
-mapData <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/amznWarehouses.csv'
+mapData <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/amznWarehouses.csv'
 
 # Import
-amzn       <- read.csv(mapData)
+amzn <- read.csv(mapData)
 
 # This is messy webscraped data, check out the state.
 tail(amzn$STATE,25)
@@ -34,9 +34,9 @@ NEwarehouses <- amzn[idx, ]
 
 # More familiar ggplot interface
 us <- fortify(map_data('state'), region = 'region')
-gg <- ggplot() + 
+gg <- ggplot() +
   geom_map(data  =  us, map = us,
-           aes(x = long, y = lat, map_id = region, group = group), fill = 'white', color = 'black', linewidth = 0.25) + 
+           aes(x = long, y = lat, map_id = region, group = group), fill = 'white', color = 'black', linewidth = 0.25) +
   coord_map('albers', lat0 = 39, lat1 = 45) +
   theme_map()
 gg
@@ -46,16 +46,16 @@ head(us)
 
 # Subset to multiple states
 ne <- us[ us$region %in% c("massachusetts","maine", "vermont", "new hampshire"), ]
-ggNE <- ggplot() + 
+ggNE <- ggplot() +
   geom_map(data  =  ne, map = ne,
-           aes(x = long, y = lat, 
-               map_id = region, group = group), 
-           fill = 'white', color = 'black', size = 0.25) + 
+           aes(x = long, y = lat,
+               map_id = region, group = group),
+           fill = 'white', color = 'black', size = 0.25) +
   coord_map('albers', lat0 = 39, lat1 = 45) +
   theme_map()
 ggNE +
-  geom_point(data=NEwarehouses, 
-             aes(x=lon, y=lat), color='red', alpha=0.5) 
+  geom_point(data=NEwarehouses,
+             aes(x=lon, y=lat), color='red', alpha=0.5)
 
 # County and single state
 ma       <- subset(us, us$region=='massachusetts')
@@ -64,22 +64,22 @@ MAcounty <- subset(counties, region == "massachusetts")
 onlyMA   <- subset(NEwarehouses,NEwarehouses$stateAbb=='MA')
 
 # State and county outlines
-ggMA <- ggplot() + 
+ggMA <- ggplot() +
   geom_map(data  =  MAcounty, map = MAcounty,
-           aes(x = long, y = lat, 
-               map_id = region, group = group), 
-           fill = 'white', color = 'blue', size = 0.25) + 
+           aes(x = long, y = lat,
+               map_id = region, group = group),
+           fill = 'white', color = 'blue', size = 0.25) +
   coord_map('albers', lat0 = 39, lat1 = 45) +
   theme_map()
 ggMA +
-  geom_point(data = onlyMA, 
-             aes(x = lon, y = lat), color = 'red', alpha=0.5) 
+  geom_point(data = onlyMA,
+             aes(x = lon, y = lat), color = 'red', alpha=0.5)
 
 # Leaflet layers using %>% pipe
 mplot<- leaflet(data=onlyMA) %>%
-  addTiles() %>% 
+  addTiles() %>%
   addMarkers( popup = paste("Loc:", onlyMA$Location, "<br>",
                             "SqFt:", onlyMA$Sq..Feet,"<br>",
-                            "Type:", onlyMA$Type)) 
+                            "Type:", onlyMA$Type))
 mplot
 # End

@@ -2,14 +2,14 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: May 28, 2023
+#' Date: Aug 7, 2023
 #'
 
 # Libs
 library(tm)
 
 # Get the data path
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/coffeeVector.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/coffeeVector.csv'
 
 # Options & Functions
 Sys.setlocale('LC_ALL','C')
@@ -26,7 +26,7 @@ tryTolower <- function(x){
 }
 
 cleanCorpus<-function(corpus, customStopwords){
-  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url)) 
+  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
   corpus <- tm_map(corpus, removePunctuation)
   corpus <- tm_map(corpus, stripWhitespace)
   corpus <- tm_map(corpus, removeNumbers)
@@ -64,7 +64,7 @@ df[4,]
 cleanVector[4]
 
 ## YOu only need to make one of these since they are the same data!
-# Make a Document Term Matrix 
+# Make a Document Term Matrix
 txtDtm  <- DocumentTermMatrix(txtCorpus)
 txtDtmM <- as.matrix(txtDtm)
 
@@ -73,7 +73,7 @@ txtTdm  <- TermDocumentMatrix(txtCorpus)
 txtTdmM <- as.matrix(txtTdm)
 
 # If you have a lot of data you may not want to make them inefficient "simple matrices" with as.matrix()
-# DocumentTermMatrix & TermDocumentMatrix are "simple_triplet_matrix" objects so you can work with 
+# DocumentTermMatrix & TermDocumentMatrix are "simple_triplet_matrix" objects so you can work with
 # large data using library(slam) functions
 
 # Examine
@@ -93,9 +93,6 @@ topTermsA <- data.frame(terms = colnames(txtDtmM), freq = topTermsA, row.names =
 
 # Review
 head(topTermsA)
-head(topTermsB)
-topTermsB <- data.frame(terms = rownames(txtTdmM), freq = topTermsB, row.names = NULL)
-topTermsB <- rowSums(txtTdmM)
 
 # Which term is the most frequent?
 idx <- which.max(topTermsA$freq)

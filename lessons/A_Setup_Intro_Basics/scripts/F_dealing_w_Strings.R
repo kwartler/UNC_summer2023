@@ -5,7 +5,7 @@
 #'
 
 # Get the data path
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/coffeeVector.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/coffeeVector.csv'
 
 # Libs
 library(stringi)
