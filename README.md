@@ -7,9 +7,9 @@
 | 9:30-12;12:45-3:45     | Aug14 Mon                   | NLP Intro, R Basics          | Chapter 1                                         |  
 | 9:30-12;12:45-3:45     | Aug15 Tue                   | BOW, DTM, Visuals            |  “Homework” HW1-Basics of R Coding Chapter 2, 3   |   
 | 9:30-12;12:45-3:45     | Aug16 Wed                   | Basic Doc classification     |  "Homework" HW2 Load, clean documents & frequency |   
-| 9:30-12;12:45-3:45     | Aug17 Thu                   | Sentiment, APIs, GPT         |                                                   | 
+| 9:30-12;12:45-3:45     | Aug17 Thu                   | Sentiment, APIs, GPT         |  "Homework" HW3 Create a document classifier      | 
 | 4-6pm                  | Aug17 Thu (optional lab)    | Bring your own text!         |                                                   |  
-| 9:30-12;12:45-3:45     | Aug18 Fri                   | UDPipe, OpenNLP, NLP Ethics  | "Homework" HW3 Create a document classifier       |  
+| 9:30-12;12:45-3:45     | Aug18 Fri                   | UDPipe, OpenNLP, NLP Ethics  |                                                   |  
 
 # R installation
 [base-R](https://cran.r-project.org/)
