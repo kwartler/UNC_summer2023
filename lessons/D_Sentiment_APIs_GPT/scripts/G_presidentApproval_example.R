@@ -1,6 +1,6 @@
 #' Purpose: Review  numeric API & make interactive chart
 #' Author: Ted Kwartler
-#' Date: May 23, 2023
+#' Date: Aug 8, 2023
 #'
 
 # Libraries
@@ -11,7 +11,7 @@ library(dygraphs)
 library(lubridate)
 
 # Original pages
-# https://projects.fivethirtyeight.com/biden-approval-rating/adults/
+# https://projects.fivethirtyeight.com/biden-approval-rating/
 
 # Developer Tab has 3 API endpoints
 #historicalURL <- 'https://projects.fivethirtyeight.com/biden-approval-rating/historical-approval.json'
@@ -26,13 +26,18 @@ head(presApproval)
 tail(presApproval)
 
 # Subset to "All polls", and not future predictions & just estimates
-subSurvey <- subset(presApproval, 
-                    presApproval$subgroup == 'All polls' & 
-                      presApproval$future == F)
-disapprove <- ts(subSurvey$disapprove_estimate, 
-                 start = c(2021, 23), 
+subSurvey <- subset(presApproval,
+                    presApproval$subgroup == 'All polls')
+head(subSurvey$date)
+
+# The API sometimes changes the order
+subSurvey$date <- as.Date(subSurvey$date)
+subSurvey      <- subSurvey[order(subSurvey$date),]
+head(subSurvey$date)
+disapprove <- ts(subSurvey$disapprove_estimate,
+                 start = c(2021, 23),
                  frequency = 365)
-approve    <- ts(subSurvey$approve_estimate, start = c(2021, 23), 
+approve    <- ts(subSurvey$approve_estimate, start = c(2021, 23),
                  frequency = 365)
 
 ratings <- cbind(disapprove, approve)

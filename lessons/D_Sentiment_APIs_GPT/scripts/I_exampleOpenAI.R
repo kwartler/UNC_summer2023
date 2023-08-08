@@ -57,7 +57,7 @@ response
 
 # For NLP tasks it can do named entity recognition, sentiment analysis (though its hard to know the exact method)
 # consider some text:
-profURL <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/E_SyntacticParsing_DataSources/data/allBios.csv'
+profURL <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/D_Sentiment_APIs_GPT/data/allBios.csv'
 
 # Bring in the data
 allGSERM <- read.csv(profURL)

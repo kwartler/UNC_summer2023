@@ -10,12 +10,6 @@
 # libs
 library(googleLanguageR)
 
-# Set the working directory for our data; sets the data path explicitly
-setwd("~/Desktop/GSERM_ICPSR/lessons/E_SyntacticParsing_DataSources/data")
-
-# Folder of our many documents
-folderPath <- '~/Desktop/GSERM_ICPSR/lessons/E_SyntacticParsing_DataSources/data/clinton'
-
 # Authenticate
 #gl_auth('~/Documents/course and other repos/speech2txt-25cb48408ae7.json')
 
@@ -25,7 +19,7 @@ folderPath <- '~/Desktop/GSERM_ICPSR/lessons/E_SyntacticParsing_DataSources/data
 # Google NLP - Part of Speech Tagging (R has this for free w/library UDpipe)
 # Google NLP - Sentiment (R has this for free w/multiple libs and approaches)
 # Google NLP - Document Tagging (R *could* do this as a multi-class problem)
-texts     <- readLines(list.files(folderPath, pattern = 'C05791318.txt', full.names= T)) 
+texts     <- readLines('https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/D_Sentiment_APIs_GPT/data/C05791318.txt')
 texts     <- paste(texts, collapse = ' ')
 #nlpResult <- gl_nlp(texts)
 #saveRDS(nlpResult,'nlpResult.rds')
@@ -46,14 +40,14 @@ nlpResult$classifyText
 text <- "Text Mining in Practice with R. It's the math of talking, you're two favorite things! "
 
 ## translate English into Danish
-#translatedTxt <- gl_translate(text, target = "fr") #Norwegian
+translatedTxt <- gl_translate(text, target = "fr")
 #saveRDS(translatedTxt, 'translatedTxt.rds')
 #translatedTxt <- readRDS('translatedTxt.rds')
 translatedTxt$translatedText
 
 #### Speech to Text
 #http://www.voiptroubleshooter.com/open_speech/american.html
-speechToTxt <- gl_speech('trimmed.wav', sampleRateHertz = 8000)
+speechToTxt <- gl_speech('~/Desktop/UNC_summer2023/lessons/D_Sentiment_APIs_GPT/data/trimmed.wav', sampleRateHertz = 8000)
 #saveRDS(speechToTxt, 'speechToTxt.rds')
 #speechToTxt <- readRDS('speechToTxt.rds')
 
