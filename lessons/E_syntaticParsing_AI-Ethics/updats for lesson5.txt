@@ -1,4 +1,0 @@
-updats for lesson5
-1. add gpt sexism
-2. add gpt company missteps
-3. add aiidb
