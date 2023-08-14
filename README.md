@@ -44,7 +44,7 @@ install.packages(c("lda", "LDAvis", "treemap"))
 ```
 # There is one additional package we will install on day 1 from a local .tar.gz file.
 # Try this code with an updated path to your own copy of the file
-install.packages("~/Desktop/GSERM_ICPSR/openNLPmodels.en_1.5-1.tar.gz", repos = NULL, type = "source")
+install.packages("~/Desktop/UNC_summer2023/lessons/E_syntaticParsing_AI-Ethics/data/openNLPmodels.en_1.5-1.tar.gz", repos = NULL, type = "source")
 
 # Or you can try the original datacube for it, though it often fails.
 install.packages('openNLPmodels.en', repo= 'http://datacube.wu.ac.at/')
