@@ -1,11 +1,11 @@
 #' Purpose: Learn some basic cleaning functions & term frequency
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
-#' Date: May 28, 2023
+#' Date: Aug 14, 2023
 #'
 
 # File path input
-filePath <- 'https://raw.githubusercontent.com/kwartler/GSERM_ICPSR/main/lessons/A_Setup_Intro_Basics/data/coffeeVector.csv'
+filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/A_Setup_Intro_Basics/data/coffeeVector.csv'
 
 # Libs
 library(tm)
@@ -38,13 +38,13 @@ stops <- c(stopwords('english'), 'lol', 'smh')
 text <- read.csv(filePath)
 
 # Make a volatile corpus
-txtCorpus <- VCorpus(VectorSource(text$text))
+txtCorpus <- VCorpus(VectorSource(text$x))
 
 # Preprocess the corpus
 txtCorpus <- cleanCorpus(txtCorpus, stops)
 
 # Compare a single tweet
-text$text[4]
+text$x[4]
 content(txtCorpus[[4]])
 
 # Make a Document Term Matrix or Term Document Matrix depending on analysis

@@ -80,7 +80,7 @@ wordcloud2(wineDF[1:50,],
 # Some built in shapes need to click "show in new window"
 # 'circle', 'cardioid', 'diamond', 'triangle-forward', 'triangle', 'pentagon', & 'star'
 wordcloud2(wineDF[1:50,],
-           shape = "cardioid",
+           shape = "diamond",
            color = "blue",
            backgroundColor = "pink")
 

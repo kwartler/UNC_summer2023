@@ -51,21 +51,20 @@ for (i in 1:length(txtFiles)){
   cat(paste('read completed:',txtFiles[i],'\n'))
 }
 
-
 # Vector Corpus; omit the meta data
-coffee       <- VCorpus(VectorSource(coffee$text))
+coffee     <- VCorpus(VectorSource(coffee$text))
 chardonnay <- VCorpus(VectorSource(chardonnay$text))
 
 # Clean up the data
-coffee       <- cleanCorpus(coffee, stops)
+coffee     <- cleanCorpus(coffee, stops)
 chardonnay <- cleanCorpus(chardonnay, stops)
 
 # Another way to extract the cleaned text
-coffee       <- unlist(lapply(coffee, content))
+coffee     <- unlist(lapply(coffee, content))
 chardonnay <- unlist(lapply(chardonnay, content))
 
 # Instead of 1000 individual documents, collapse each into a single "subject" ie a single document
-coffee       <- paste(coffee, collapse = ' ')
+coffee     <- paste(coffee, collapse = ' ')
 chardonnay <- paste(chardonnay, collapse = ' ')
 
 # Combine the subject documents into a corpus of *2* documents
