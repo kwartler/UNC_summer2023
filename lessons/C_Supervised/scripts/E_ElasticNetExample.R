@@ -29,6 +29,18 @@ diabetes$diagnosisText <- as.character(paste(diabetes$diag_1_desc,
                                              diabetes$diag_2_desc,
                                              diabetes$diag_3_desc, sep=' '))
 
+#### Encoding issue in patient 791
+grep('Acute nonsuppurative otitis',
+     diabetes$diagnosisText, ignore.case = T)
+diabetes$diagnosisText[791]
+
+# Fix encoding?
+#iconvlist()
+#stringi::stri_enc_detect(diabetes$diagnosisText)
+diabetes$diagnosisText <- iconv(diabetes$diagnosisText, "latin1", "ISO-8859-1", sub="")
+diabetes$diagnosisText <- stringi::stri_encode(diabetes$diagnosisText, "", "UTF-8")
+
+
 ### SAMPLE : Partitioning
 idx              <- createDataPartition(diabetes$readmitted,p=.7,list=F)
 trainDiabetesTxt <- diabetes[idx,]
