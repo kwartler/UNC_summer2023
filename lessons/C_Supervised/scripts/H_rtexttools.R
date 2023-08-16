@@ -1,10 +1,10 @@
-#' Title: Multiple Supervised Methods 
+#' Title: Multiple Supervised Methods
 #' Purpose: Explore the rtexttools package
 #' Author: Ted Kwartler
 #' email: edward.kwartler@hult.edu
 #' License: GPL>=3
 #' Date: Aug 15, 2023
-#' 
+#'
 
 
 # Libs
@@ -42,6 +42,7 @@ stops <- c(stopwords('SMART'), 'diabetes', 'patient')
 filePath <- 'https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/C_Supervised/data/diabetes_subset_8500.csv'
 diabetes <- read.csv(filePath)
 txt <- paste(diabetes$diag_1_desc,diabetes$diag_2_desc,diabetes$diag_3_desc)
+txt <- stringi::stri_encode(txt, "", "UTF-8")
 
 # Subset to avoid overfitting
 set.seed(1234)
@@ -58,10 +59,10 @@ cleanTrain <- data.frame(text = unlist(sapply(cleanTrain, `[`, "content")),
 trainDTMm <- create_matrix(cleanTrain, language="english")
 
 # Create the container
-# trainSize; if you want to split within the single matrix but best practice is to bring it in separate to mimic really new data processing 
+# trainSize; if you want to split within the single matrix but best practice is to bring it in separate to mimic really new data processing
 container <- create_container(matrix    = trainDTMm,
-                              labels    = diabetes$readmitted[idx], 
-                              trainSize = 1:length(idx), 
+                              labels    = diabetes$readmitted[idx],
+                              trainSize = 1:length(idx),
                               virgin=FALSE)
 
 # Build Models, can take ages for complex algos
@@ -99,7 +100,7 @@ cleanTest <- data.frame(text = unlist(sapply(cleanTest, `[`, "content")),
 allDTM <- rbind(cleanTrain, cleanTest)
 allDTMm <- create_matrix(allDTM, language="english")
 containerTest <- create_container(matrix    = allDTMm,
-                                  labels    = diabetes$readmitted, 
+                                  labels    = diabetes$readmitted,
                                   trainSize = 1:length(idx),
                                   testSize  = (length(idx)+1):8500,
                                   virgin=T)

@@ -30,6 +30,8 @@ diabetes <- read.csv(filePath)
 diabetes$diagnosisText <- as.character(paste(diabetes$diag_1_desc,
                                          diabetes$diag_2_desc,
                                          diabetes$diag_3_desc, sep=' '))
+diabetes$diagnosisText <- stringi::stri_encode(diabetes$diagnosisText, "", "UTF-8")
+
 
 ### SAMPLE : Patritioning
 idx              <- createDataPartition(diabetes$readmitted,p=.7,list=F)
