@@ -60,6 +60,14 @@ dim(tidyCorp)
 bing <- get_sentiments(lexicon = c("bing"))
 head(bing)
 
+# Example adjustment to the base lexicon
+customLexiconPol <- data.frame(word = c('lol','smh'),
+                               sentiment = c('positive','negative'))
+
+bing <- rbind(bing, customLexiconPol)
+
+bingWSB <- bing[-grep('retard', bing$word),]
+
 # Perform Inner Join
 bingSent <- inner_join(tidyCorp, bing, by=c('term' = 'word'))
 bingSent

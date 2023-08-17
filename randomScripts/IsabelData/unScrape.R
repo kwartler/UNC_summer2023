@@ -50,4 +50,7 @@ rawTxt <- trimws(rawTxt)
 # Initially we can cutoff anything after "Related Content"
 cutoffLine <- grep('\\bRelated Content\\b', rawTxt)
 trimws(paste(rawTxt[1:cutoffLine-1], collapse = ' '))
+
+# So let's write a loop to
+
 # End
