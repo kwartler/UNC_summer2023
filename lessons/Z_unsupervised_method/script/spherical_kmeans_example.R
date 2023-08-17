@@ -42,7 +42,7 @@ cleanCorpus<-function(corpus, customStopwords){
 }
 
 # Data
-txt <- read.csv('3k_exampleTweets.csv')
+txt <- read.csv('https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/Z_unsupervised_method/data/3k_exampleTweets.csv')
 
 # Apply tm functions
 txtCorp <- VCorpus(VectorSource(txt$x))

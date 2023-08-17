@@ -1,4 +1,4 @@
-#' Title: Topic Modeling 
+#' Title: Topic Modeling
 #' Purpose: Unsupervised LDA model building
 #' Author: Ted Kwartler
 #' email: edward.kwartler@fas.harvard.edu
@@ -46,10 +46,10 @@ Sys.setlocale('LC_ALL','C')
 stops <- c(stopwords('SMART'), 'pakistan', 'gmt', 'pm')
 
 # Data articles from ~2016-04-04
-text <- read.csv("Guardian_text.csv")
+text <- read.csv("https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/Z_unsupervised_method/data/Guardian_text.csv")
 text$body[1]
 
-# String clean up 
+# String clean up
 text$body <- iconv(text$body, "latin1", "ASCII", sub="")
 text$body <- gsub('http\\S+\\s*', '', text$body ) #rm URLs
 text$body <- gsub("<.*?>",'', text$body) #rm text inside brackets
@@ -71,7 +71,7 @@ txtLex <- lexicalize(txt)
 
 # Examine the vocab or key and value pairing between key ()
 head(txtLex$vocab) # remember #6
-length(txtLex$vocab) #8k+ unique words among all articles, each 
+length(txtLex$vocab) #8k+ unique words among all articles, each
 head(txtLex$documents[[1]]) #look at [,22]
 head(txtLex$documents[[20]])
 
@@ -83,19 +83,19 @@ txtDocLength  <- document.lengths(txtLex$documents)
 # suppose you have a bag of dice (documents)
 # alpha - there is a distribution of the probabilities of how similar they are to each other, are dice similar in size/shape/weight?
 # eta   - there is also a distribution of probabilities for the number of topics inside a single document, are dice 6 sided or other?
-# 
+#
 k       <- 5 # number of topics
 numIter <- 25 # number of reviews, it performs random word sampling each time
-alpha   <- 0.02 #see above 
+alpha   <- 0.02 #see above
 eta     <- 0.02 #see above
-set.seed(1234) 
-fit <- lda.collapsed.gibbs.sampler(documents      = txtLex$documents, 
-                                   K              = k, 
-                                   vocab          = txtLex$vocab, 
-                                   num.iterations = numIter, 
-                                   alpha          = alpha, 
-                                   eta            = eta, 
-                                   initial        = NULL, 
+set.seed(1234)
+fit <- lda.collapsed.gibbs.sampler(documents      = txtLex$documents,
+                                   K              = k,
+                                   vocab          = txtLex$vocab,
+                                   num.iterations = numIter,
+                                   alpha          = alpha,
+                                   eta            = eta,
+                                   initial        = NULL,
                                    burnin         = 0,
                                    compute.log.likelihood = TRUE)
 
@@ -114,9 +114,9 @@ theta <- t(apply(fit$document_sums + alpha, 2, function(x) x/sum(x))) # topic pr
 phi  <- t(apply(fit$topics + eta, 1, function(x) x/sum(x)))
 
 ldaJSON <- createJSON(phi = phi,
-                      theta = theta, 
-                      doc.length = txtDocLength, 
-                      vocab = txtLex$vocab, 
+                      theta = theta,
+                      doc.length = txtDocLength,
+                      vocab = txtLex$vocab,
                       term.frequency = as.vector(txtWordCount))
 
 serVis(ldaJSON)
@@ -136,7 +136,7 @@ topicAssignments <- max.col(clusterTallyByArticle)
 
 
 # Recode to the top words for the topics; instead of topic "1", "2" use the top words identified earlier
-assignments <- dplyr::recode(topicAssignments, 
+assignments <- dplyr::recode(topicAssignments,
                       topFive[1],topFive[2],topFive[3],topFive[4],topFive[5])
 assignments
 
@@ -145,7 +145,7 @@ polMeasure <- analyzeSentiment(text$body)
 
 
 # Final Organization
-allTree <- data.frame(topic    = assignments, 
+allTree <- data.frame(topic    = assignments,
                       polarity = polMeasure$SentimentQDAP,
                       length   = txtDocLength)
 head(allTree)
@@ -155,7 +155,7 @@ tmap <- treemap(allTree,
                 index   = c("topic","length"),
                 vSize   = "length",
                 vColor  = "polarity",
-                type    ="value", 
+                type    ="value",
                 title   = "Guardan Articles mentioning Pakistan",
                 palette = c("red","white","green"))
 
