@@ -93,7 +93,7 @@ afinnSent
 afinnSent$ValueCount <- afinnSent$value * afinnSent$count
 afinnSent
 
-# Visualization, keep in mind these are words in alphabetical order, some analysis would use time
+# Visualization, keep in mind these are words in alphabetical order, some analysis would use time and make a timeline
 ggplot(afinnSent, aes(idx, ValueCount, fill = document)) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~document, ncol = 1, scales = "free_y")

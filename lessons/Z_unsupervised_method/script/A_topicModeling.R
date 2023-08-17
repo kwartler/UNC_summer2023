@@ -1,0 +1,162 @@
+#' Title: Topic Modeling 
+#' Purpose: Unsupervised LDA model building
+#' Author: Ted Kwartler
+#' email: edward.kwartler@fas.harvard.edu
+#' Date: Aug 16, 2023
+#'
+#'FOR REALLY DECENT EXPLANATION w/more math http://i.amcat.nl/lda/understanding_alpha.html
+
+# Libs
+library(tm)
+library(lda)
+library(LDAvis)
+library(dplyr)
+library(treemap)
+library(SentimentAnalysis)
+
+# Custom Functions
+tryTolower <- function(x){
+  y = NA
+  try_error = tryCatch(tolower(x), error = function(e) e)
+  if (!inherits(try_error, 'error'))
+    y = tolower(x)
+  return(y)
+}
+
+cleanCorpus<-function(corpus, customStopwords){
+  corpus <- tm_map(corpus, content_transformer(qdapRegex::rm_url))
+  corpus <- tm_map(corpus, removeNumbers)
+  corpus <- tm_map(corpus, removePunctuation)
+  corpus <- tm_map(corpus, stripWhitespace)
+  corpus <- tm_map(corpus, content_transformer(tryTolower))
+  corpus <- tm_map(corpus, removeWords, customStopwords)
+  return(corpus)
+}
+# In some cases, blank documents and words are created bc of preprocessing.  This will remove them.
+blankRemoval<-function(x){
+  x <- unlist(strsplit(x,' '))
+  x <- subset(x,nchar(x)>0)
+  x <- paste(x,collapse=' ')
+}
+
+# Options & Functions
+Sys.setlocale('LC_ALL','C')
+
+# Stopwords
+stops <- c(stopwords('SMART'), 'pakistan', 'gmt', 'pm')
+
+# Data articles from ~2016-04-04
+text <- read.csv("Guardian_text.csv")
+text$body[1]
+
+# String clean up 
+text$body <- iconv(text$body, "latin1", "ASCII", sub="")
+text$body <- gsub('http\\S+\\s*', '', text$body ) #rm URLs
+text$body <- gsub("<.*?>",'', text$body) #rm text inside brackets
+text$body <- gsub("\\(.*?\\)", "", text$body ) #rm text inside parentheses
+text$body[1]
+
+# Instead of DTM/TDM, just clean the vector w/old functions
+txt <- VCorpus(VectorSource(text$body))
+txt <- cleanCorpus(txt, stops)
+
+# Extract the clean text
+txt <- sapply(txt, content)
+
+# Remove any blanks, happens sometimes w/tweets bc small length & stopwords
+txt <- lapply(txt, blankRemoval)
+
+# Lexicalize
+txtLex <- lexicalize(txt)
+
+# Examine the vocab or key and value pairing between key ()
+head(txtLex$vocab) # remember #6
+length(txtLex$vocab) #8k+ unique words among all articles, each 
+head(txtLex$documents[[1]]) #look at [,22]
+head(txtLex$documents[[20]])
+
+# Corpus stats
+txtWordCount  <- word.counts(txtLex$documents, txtLex$vocab)
+txtDocLength  <- document.lengths(txtLex$documents)
+
+# LDA Topic Modeling
+# suppose you have a bag of dice (documents)
+# alpha - there is a distribution of the probabilities of how similar they are to each other, are dice similar in size/shape/weight?
+# eta   - there is also a distribution of probabilities for the number of topics inside a single document, are dice 6 sided or other?
+# 
+k       <- 5 # number of topics
+numIter <- 25 # number of reviews, it performs random word sampling each time
+alpha   <- 0.02 #see above 
+eta     <- 0.02 #see above
+set.seed(1234) 
+fit <- lda.collapsed.gibbs.sampler(documents      = txtLex$documents, 
+                                   K              = k, 
+                                   vocab          = txtLex$vocab, 
+                                   num.iterations = numIter, 
+                                   alpha          = alpha, 
+                                   eta            = eta, 
+                                   initial        = NULL, 
+                                   burnin         = 0,
+                                   compute.log.likelihood = TRUE)
+
+# Prototypical Document
+top.topic.documents(fit$document_sums,2) #top 2 docs (rows) * topics(cols)
+
+# explore some of the results
+fit$document_sums #topics by articles
+head(t(fit$topics)) #words by topics
+
+# LDAvis params
+# normalize the article probabilities to each topic
+theta <- t(apply(fit$document_sums + alpha, 2, function(x) x/sum(x))) # topic probabilities within a doc will sum to 1
+
+# normalize each topic word's impact to the topic
+phi  <- t(apply(fit$topics + eta, 1, function(x) x/sum(x)))
+
+ldaJSON <- createJSON(phi = phi,
+                      theta = theta, 
+                      doc.length = txtDocLength, 
+                      vocab = txtLex$vocab, 
+                      term.frequency = as.vector(txtWordCount))
+
+serVis(ldaJSON)
+
+# Topic Extraction
+top.topic.words(fit$topics, 10, by.score=TRUE)
+
+# Name Topics
+topFive <- top.topic.words(fit$topics, 5, by.score=TRUE)
+topFive <- apply(topFive,2,paste, collapse='_')
+
+# Let's assign clusters from most frequent word tally
+clusterTallyByArticle <- t(fit$document_sums)
+clusterTallyByArticle
+max.col(clusterTallyByArticle)
+topicAssignments <- max.col(clusterTallyByArticle)
+
+
+# Recode to the top words for the topics; instead of topic "1", "2" use the top words identified earlier
+assignments <- dplyr::recode(topicAssignments, 
+                      topFive[1],topFive[2],topFive[3],topFive[4],topFive[5])
+assignments
+
+# Polarity calc to add to visual
+polMeasure <- analyzeSentiment(text$body)
+
+
+# Final Organization
+allTree <- data.frame(topic    = assignments, 
+                      polarity = polMeasure$SentimentQDAP,
+                      length   = txtDocLength)
+head(allTree)
+
+set.seed(1237)
+tmap <- treemap(allTree,
+                index   = c("topic","length"),
+                vSize   = "length",
+                vColor  = "polarity",
+                type    ="value", 
+                title   = "Guardan Articles mentioning Pakistan",
+                palette = c("red","white","green"))
+
+# End

@@ -36,7 +36,7 @@ cleanCorpus<-function(corpus, customStopwords){
 stops <- c(stopwords('english'))
 
 # Clean and Organize
-txt <- read.csv('https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/D_Sentiment/data/Weeknd.csv')
+txt <- read.csv('https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/D_Sentiment_APIs_GPT/data/Weeknd.csv')
 # Make a volatile corpus
 txtCorpus <- VCorpus(VectorSource(txt$text))
 
@@ -85,6 +85,7 @@ weekndWords <- data.frame(word = unlist(strsplit(weeknd,' ')))
 weekndWords$word <- tolower(weekndWords$word )
 weekndWords <- left_join(weekndWords,afinn, by=c('word' = 'word'))
 weekndWords[is.na(weekndWords$value),2] <- 0
+weekndWords
 plot(weekndWords$value, type="l", main="Quick Timeline of Identified Words")
 
 # Get nrc lexicon; deprecated in tidytext, use library(lexicon)

@@ -6,14 +6,14 @@
 
 # Libs
 library(sentimentr)
-library(lexicon)
+library(lexicon) #lexicon::available_data()
 library(dplyr)
 library(SentimentAnalysis)
 library(ggplot2)
 
 
 # Read in data
-txt <- read.csv("https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/D_Sentiment/data/new_orleans_airbnb_listings.csv")
+txt <- read.csv("https://raw.githubusercontent.com/kwartler/UNC_summer2023/main/lessons/D_Sentiment_APIs_GPT/data/new_orleans_airbnb_listings.csv")
 
 # Explore
 head(txt)
@@ -50,7 +50,7 @@ sentGrp <- sentiment_by(text.var = get_sentences(txt$description),
 head(sentGrp)
 
 # Let's make a cleveland dot plot of the top 15 neighborhoods
-ggplot(sentGrp[1:15,], aes(x = word_count, y = reorder(neighbourhood_cleansed, ave_sentiment))) +
+ggplot(sentGrp[1:15,], aes(x = word_count, y = reorder(neighbourhood_cleansed, word_count))) +
   geom_segment(aes(yend = reorder(neighbourhood_cleansed, ave_sentiment)),
                xend = 0, colour = "darkgrey") +
   geom_point(aes(x = word_count, y = reorder(neighbourhood_cleansed, ave_sentiment), size = ave_sentiment)) +
@@ -61,13 +61,13 @@ ggplot(sentGrp[1:15,], aes(x = word_count, y = reorder(neighbourhood_cleansed, a
 # Now let's try SentimentAnalysis, which can also accept a corpus directly, again some calc differences
 # This function has an aggregate parameter but its unclear whether it does it by factor order thus
 # we control the join later
-multipleMethods <- analyzeSentiment(txt$description,
-                                    language = "english",
-                                    aggregate = NULL,
-                                    removeStopwords = TRUE,
-                                    stemming = TRUE)
-saveRDS(multipleMethods,
-        '~/Desktop/UNC_summer2023/personalFiles/multipleMethods.rds')
+#multipleMethods <- analyzeSentiment(txt$description,
+#                                    language = "english",
+#                                    aggregate = NULL,
+#                                    removeStopwords = TRUE,
+#                                    stemming = TRUE)
+#saveRDS(multipleMethods,
+#        '~/Desktop/UNC_summer2023/personalFiles/multipleMethods.rds')
 multipleMethods <- readRDS('~/Desktop/UNC_summer2023/personalFiles/multipleMethods.rds')
 head(multipleMethods)
 
