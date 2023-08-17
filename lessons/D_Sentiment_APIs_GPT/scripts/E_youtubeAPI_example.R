@@ -13,7 +13,7 @@ Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
 
 # Youtube URL
 # https://www.youtube.com/watch?v=K5Rly83zfuI&ab_channel=TheDailyShowwithTrevorNoah
-youtubeCaption <- "https://www.youtube.com/api/timedtext?v=K5Rly83zfuI&ei=h4zdZOjHKaeV_9EPzsC92Aw&caps=asr&opi=112496729&xoaf=4&hl=en&ip=0.0.0.0&ipbits=0&expire=1692266231&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf&signature=93AA2122C6A77521802DFDBE4189D6D27C2CF514.DBEC943DAA8E5A0972497529E519FEF0E5C22FDF&key=yt8&lang=en-US&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=114.0.0.0&c=WEB&cver=2.20230815.07.00&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP"
+youtubeCaption <- "https://www.youtube.com/api/timedtext?v=K5Rly83zfuI&ei=DTreZKuRF_iB_9EP8pOmkAY&caps=asr&opi=112496729&xoaf=4&hl=en&ip=0.0.0.0&ipbits=0&expire=1692310653&sparams=ip%2Cipbits%2Cexpire%2Cv%2Cei%2Ccaps%2Copi%2Cxoaf&signature=227C97F280520458424E8FFC5AF54E00EA530ABA.DA727864A46AA5639140B0C1AD21839D61109BDA&key=yt8&lang=en-US&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=114.0.0.0&c=WEB&cver=2.20230815.07.00&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP"
 
 # Backup file
 #youtubeCaption <- '~/Desktop/UNC_summer2023/lessons/D_Sentiment_APIs_GPT/data/f.json'
