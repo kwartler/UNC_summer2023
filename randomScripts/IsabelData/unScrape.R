@@ -33,6 +33,12 @@ writeLines(allRelevantVector,  '~/Desktop/UNC_summer2023/randomScripts/IsabelDat
 
 # Example events page -- Success!
 tmp <- read_html(allRelevantVector[5])
+tmpDate <- tmp %>% html_nodes('p') %>% html_text()
+tmpDate[1]
+
+
+tmpDate <- tmp
+/html/body/div[8]/div[2]/div/div[1]/div/div/div/div/div/section/p[2]
 tmp <- tmp %>% html_nodes('.page-content') %>% html_text()
 tmp
 
