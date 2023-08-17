@@ -68,7 +68,7 @@ ggplot(sentGrp[1:15,], aes(x = word_count, y = reorder(neighbourhood_cleansed, w
 #                                    stemming = TRUE)
 #saveRDS(multipleMethods,
 #        '~/Desktop/UNC_summer2023/personalFiles/multipleMethods.rds')
-multipleMethods <- readRDS('~/Desktop/UNC_summer2023/personalFiles/multipleMethods.rds')
+multipleMethods <- readRDS('~/Desktop/UNC_summer2023/lessons/D_Sentiment_APIs_GPT/data/multipleMethods.rds')
 head(multipleMethods)
 
 # Append the grp
