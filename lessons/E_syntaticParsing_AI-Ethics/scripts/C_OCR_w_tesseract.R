@@ -4,7 +4,7 @@
 #' Date: May 28, 2023
 #' Notes: this is largely poached from here:
 #' https://cran.r-project.org/web/packages/tesseract/vignettes/intro.html#read_from_pdf_files
-#' 
+#'
 ## WARNING: Tesseract is an optical character recognition engine for various operating systems. It is free software, released under the Apache License, Version 2.0, and development has been sponsored by Google since 2006. THE R PACKAGE INSTALLS THE TESSERACT SOFTWARE
 
 # libs
@@ -21,6 +21,8 @@ img <- 'https://prestonjg.files.wordpress.com/2015/07/ny-times-moon-front.jpg'
 eng  <- tesseract("eng")
 
 # Perform Optical Character Reco
+# Windows error: Wrong JPEG library version: library is 90, caller expects 80
+# Fix?: tesseract::ocr(img, engine = eng)
 text <- ocr(img, engine = eng)
 cat(text)
 
